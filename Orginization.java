@@ -44,6 +44,11 @@ public class Orginization extends javax.swing.JFrame {
         deletebtn = new javax.swing.JButton();
         checkdriverbtn = new javax.swing.JLabel();
         checkhoursbtn = new javax.swing.JButton();
+        checkhoursbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkHrsBtnActionPerformed(evt);
+            }
+        });
         checkhourstxt = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -78,6 +83,11 @@ public class Orginization extends javax.swing.JFrame {
         addbtn.setText("Add");
 
         deletebtn.setText("Delete");
+        deletebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteDriverBtnActionPerformed(evt);
+            }
+        });
 
         checkdriverbtn.setText("Check a drivers hours");
 
@@ -89,7 +99,7 @@ public class Orginization extends javax.swing.JFrame {
 
         addbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitmenuActionPerformed(evt);
+                addBtnActionPerformed(evt);
             }
         });
         exitmenu.addActionListener(new java.awt.event.ActionListener() {
@@ -187,6 +197,27 @@ public class Orginization extends javax.swing.JFrame {
 
     }// </editor-fold>//GEN-END:initComponents
 
+    private void checkHrsBtnActionPerformed(java.awt.event.ActionEvent evt){
+
+    }
+
+    private void deleteDriverBtnActionPerformed(java.awt.event.ActionEvent evt){
+        String currentOrg;
+        if(ThetaChibtn.isSelected()){
+            currentOrg = "THETA_CHI";
+        }else if(PhiDeltaThetabtn.isSelected()){
+            currentOrg = "PHI_DELTA_THETA";
+        }else{
+            currentOrg = "TAU_BETA_SIGMA";
+        }
+        String response = client.deleteDriver(deleteDrivertxt.getText(),currentOrg);
+        if(response.equals("DRIVER NOT FOUND")){
+            deleteDrivertxt.setText(response);
+        }else{
+            deleteDrivertxt.setText("DRIVER DELETED");
+        }
+    }
+
     private void exitmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitmenuActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitmenuActionPerformed
@@ -195,7 +226,7 @@ public class Orginization extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(aboutdialog, "For questions email support@soberuber.com");
     }//GEN-LAST:event_aboutmenuActionPerformed
 
-    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutmenuActionPerformed
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {
         String orgName = "";
         if(ThetaChibtn.isSelected()){
             orgName = "THETA_CHI";

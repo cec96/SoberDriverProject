@@ -1,4 +1,4 @@
-public class OrginizationInfo extends User {
+public class OrginizationInfo extends User implements WhoAmI{
 
     private String orgName;
     public OrginizationInfo(){
@@ -11,5 +11,10 @@ public class OrginizationInfo extends User {
 
     public String getOrgName(){
         return this.orgName;
+    }
+
+    @Override
+    public String getWhoIAm() {
+        return "ORG";
     }
 }

@@ -83,7 +83,7 @@ public class Rider extends javax.swing.JFrame {
 
         requestRide.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aboutmenuActionPerformed(evt);
+                requestRideActionPerfomed(evt);
             }
         });
         jMenuBar1.add(aboutmenu);
@@ -139,7 +139,10 @@ public class Rider extends javax.swing.JFrame {
     }//GEN-LAST:event_aboutmenuActionPerformed
 
     private void requestRideActionPerfomed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutmenuActionPerformed
-        client.requestRide(organizationList.getSelectedItem().toString(),rideraddresstxt.getText(),ridernametxt.getText());
+       String response =  client.requestRide(organizationList.getSelectedItem().toString(),rideraddresstxt.getText(),ridernametxt.getText());
+        if(response.equals("DRIVER NOT FOUND")){
+            JOptionPane.showMessageDialog(this,response);
+        }
     }
 
     /**

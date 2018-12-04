@@ -126,7 +126,7 @@ public class Driver extends javax.swing.JFrame {
 
         logonButton.addActionListener(new java.awt.event.ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt){
-                aboutmenuActionPerformed(evt);
+                logonButtonActionPerformed(evt);
             }
         });
         jMenuBar1.add(aboutmenu);
@@ -144,9 +144,10 @@ public class Driver extends javax.swing.JFrame {
                                         .addComponent(logonButton)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(freebtn)
-                                                        .addComponent(customerbtn)
-                                                        .addComponent(offbtn))
+                                                        //.addComponent(freebtn)
+                                                        //.addComponent(customerbtn)
+                                                        //.addComponent(offbtn)
+                                                        )
                                                 .addGap(148, 148, 148)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                         .addComponent(jLabel4)
@@ -168,7 +169,7 @@ public class Driver extends javax.swing.JFrame {
                                 .addComponent(logonButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(freebtn)
+                                        //.addComponent(freebtn)
                                         .addComponent(jLabel2)
                                         .addComponent(addresstxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel3)
@@ -176,13 +177,14 @@ public class Driver extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(18, 18, 18)
-                                                .addComponent(customerbtn))
+                                 //               .addComponent(customerbtn))
+                                )
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(43, 43, 43)
                                                 .addComponent(jLabel4)))
                                                 .addComponent(googleMapThing)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(offbtn)
+                                //.addComponent(offbtn)
                                 .addContainerGap(60, Short.MAX_VALUE))
         );
 
@@ -198,20 +200,25 @@ public class Driver extends javax.swing.JFrame {
     }//GEN-LAST:event_aboutmenuActionPerformed
 
     private void logonButtonActionPerformed(java.awt.event.ActionEvent evt){
-       String[] returnInfo =  client.logonDriver(logonName.getText()).split("-");
-       orgName = returnInfo[0];
-       reqLoc = returnInfo[1];
-       nametxt.setText(returnInfo[2]);
-        URL img = null;
-        try {
-            img = new URL(formatLocation());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        ImageIcon image = new ImageIcon(img);
 
-        googleMapThing.setIcon(image);
-
+      String[] returnInfo = client.logonDriver(logonName.getText()).split("-");
+      if(returnInfo[0].equals("DRIVER NOT FOUND")){
+          logonName.setText(returnInfo[0]);
+      }else {
+          orgName = returnInfo[0];
+          reqLoc = returnInfo[1];
+          addresstxt.setText(reqLoc);
+          nametxt.setText(returnInfo[2]);
+          if(!returnInfo[1].equals("NO RIDE REQUESTED")) {
+              try {
+                  URL img = new URL(formatLocation());
+                  ImageIcon image = new ImageIcon(img);
+                  googleMapThing.setIcon(image);
+              } catch (MalformedURLException m) {
+                  m.printStackTrace();
+              }
+          }
+      }
     }
 
     public String formatLocation(){
@@ -223,9 +230,9 @@ public class Driver extends javax.swing.JFrame {
         if(orgName.equals("THETA_CHI")){
             homeAddress = "800+David+Ross+Rd";
         }else if(orgName.equals("PHI_DELTA_THETA")){
-            homeAddress = "503+W+State+St+IN";
+            homeAddress = "503+W+State+St+West+lafayette";
         }else if(orgName.equals("TAU_BETA_SIGMA")){
-            homeAddress = "329+W+State+St+IN";
+            homeAddress = "329+W+State+St+west+lafayette";
         }else{
             homeAddress = "501+Buckland+Rd+Matamata";
         }
@@ -239,6 +246,7 @@ public class Driver extends javax.swing.JFrame {
                     rebuiltRider += addressParts[i] + "+";
                 }
             }
+            System.out.println(rebuiltRider);
 
             rideToGiveLocation = urlFormatPt1+homeAddress+frmtPt2+rebuiltRider+keyFrmt;
 

@@ -1,4 +1,4 @@
-public class RiderInfo extends User{
+public class RiderInfo extends User implements WhoAmI{
 
     String riderName;
     String riderLocation;
@@ -9,5 +9,10 @@ public class RiderInfo extends User{
 
     public void setRiderName(String riderName){
         this.riderName = riderName;
+    }
+
+    @Override
+    public String getWhoIAm() {
+        return "RIDER";
     }
 }

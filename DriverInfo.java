@@ -1,4 +1,4 @@
-public class DriverInfo extends User {
+public class DriverInfo extends User implements WhoAmI{
 
     private String rideRequestLocation = "";
     private String organization = "";
@@ -41,5 +41,8 @@ public class DriverInfo extends User {
     }
 
 
-
+    @Override
+    public String getWhoIAm() {
+        return "DRIVER";
+    }
 }
